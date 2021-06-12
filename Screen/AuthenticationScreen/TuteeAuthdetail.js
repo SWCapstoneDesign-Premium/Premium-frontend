@@ -24,21 +24,29 @@ const TuteeAutdetail = ({navigation, route}) => {
   var studyTime = requireTime - reviewTime;
   var [plans, setPlans] = useState();
   var [chapter, setChapter] = useState();
+  const now = moment();
 
   if (project.status === 'trial') {
-    pastDay = route.params.pastDay;
+    pastDay = project.project.experience_period - remainDay + 1;
     percent = Math.floor((auths / project.project.experience_period) * 100);
   } else if (project.status === 'full') {
     pastDay = route.params.pastDay;
     percent = Math.floor((auths / project.project.duration) * 100);
   }
-
   const todayChapter = (plansT) => {
-    const now = moment();
     plansT.map((plan) => {
-      let difStart = now.diff(moment(plan.start_at), 'days');
-      let difEnd = now.diff(moment(plan.end_at), 'days');
-      if (difStart >= 0 && difEnd <= 0) setChapter(plan.chapter.title);
+      let difStart = now.diff(
+        moment(moment(plan.start_at).format('YYYY-MM-DD')),
+        'days',
+      );
+      let difEnd = now.diff(
+        moment(moment(plan.end_at).format('YYYY-MM-DD')),
+        'days',
+      );
+      console.log(difStart,difEnd)
+      if (difStart >= 0 && difEnd <= 0) {
+        setChapter(plan.chapter.title);
+      }
     });
   };
   useEffect(() => {
@@ -66,7 +74,7 @@ const TuteeAutdetail = ({navigation, route}) => {
         <Card style={styles.cardStyle}>
           <View style={styles.dayTextPosition}>
             <View style={styles.textPosition}>
-              <Text style={styles.redDayText}>{remainDay + 1}</Text>
+              <Text style={styles.redDayText}>{remainDay}</Text>
               <Text style={styles.blackDayTxt}>일 차 |</Text>
             </View>
             <View style={styles.textPosition}>
@@ -76,7 +84,15 @@ const TuteeAutdetail = ({navigation, route}) => {
           </View>
           <View>
             {pastDay <= 0 ? (
-              <Text style={styles.grayDayTxt}>종료된 프로젝트 입니다!</Text>
+              <View>
+                {project.status === 'trial' ? (
+                  <Text style={styles.grayDayTxt}>
+                    체험기간이 종료된 프로젝트 입니다!
+                  </Text>
+                ) : (
+                  <Text style={styles.grayDayTxt}>종료된 프로젝트 입니다!</Text>
+                )}
+              </View>
             ) : (
               <View style={styles.textPosition}>
                 <Text style={styles.grayDayTxt}>남은 인증 날 : </Text>
