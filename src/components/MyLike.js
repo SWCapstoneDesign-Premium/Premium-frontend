@@ -9,7 +9,7 @@ const RenderLikeList = (props) => {
   return props.likelist.map((tutor, index) => {
     if (tutor.likable) {
       return (
-        <View style={styles.container} key={index}>
+        <View style={styles.container} key={index.toString()}>
           <View style={styles.profile}>
             {tutor.likable.image === ' ' ? (
               <Image source={cat} style={styles.image} />
@@ -21,6 +21,7 @@ const RenderLikeList = (props) => {
             <Text style={styles.nameText}>{tutor.likable?.name}</Text>
 
             <Like
+              fromlist={index.toString()}
               tutor={tutor.likable}
               likecondition={true}
               likeid={tutor.id}
