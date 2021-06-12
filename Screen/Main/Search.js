@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {Component, useState} from 'react';
+import {CircularCard} from 'react-native-circular-card-view';
 import {SafeAreaView} from 'react-native';
 import {useEffect} from 'react';
 import {
@@ -9,6 +10,7 @@ import {
   Dimensions,
   useWindowDimensions,
   FlatList,
+  Keyboard,
   TouchableOpacity,
 } from 'react-native';
 import {Searchbar, Card} from 'react-native-paper';
@@ -75,7 +77,7 @@ function Search({navigation}) {
   const [isLoading, SetIsLoading] = useState(false);
   const [reqData, SetreqData] = useState([]);
   const [history, sethistory] = useState([]);
-  const [keywords, setKeywords] = useState();
+  const [keywords, setKeywords] = useState([]);
   let ScreenWidth = Dimensions.get('window').width; //screen 너비
   let ScreenHeight = Dimensions.get('window').height; //height 높이
 
@@ -83,20 +85,20 @@ function Search({navigation}) {
     SetSearchData(text);
   };
 
-    const setAsync = (value)=>{
-      console.log(value)
-      sethistory([value,...history])
-      console.log('add history',history)
-      AsyncStorage.getItem('keyword')
-      .then(req => JSON.parse(req))
-      .then(json =>{ 
-        console.log(json)
-       setKeywords(json)
+  const setAsync = (value) => {
+    console.log(value);
+    sethistory([value, ...history]);
+    console.log('add history', history);
+    AsyncStorage.getItem('keyword')
+      .then((req) => JSON.parse(req))
+      .then((json) => {
+        console.log(json);
+        setKeywords(json);
       })
-      .catch(error => console.log(error))
-      setSearchHistory((history))
-      console.log('asny',history)
-    }
+      .catch((error) => console.log(error));
+    setSearchHistory(history);
+    console.log('asny', history);
+  };
 
   async function SearchVal() {
     if (SearchData.length <= 0) {
@@ -111,38 +113,10 @@ function Search({navigation}) {
       const data = (await getprojects({q: query})).data;
       SetreqData(data);
     }
-
-    useEffect(()=>{
-      if(Searchblur){
-        SetSearchblur(false)
-      }
-      AsyncStorage.getItem('keyword')
-      .then(req => JSON.parse(req))
-      .then(json =>{ 
-        console.log(json)
-       setKeywords(json)
-      })
-      .catch(error => console.log(error))
-
-    },[reqData])
-
-    async function pressHistory (value){
-      setEnterSearch(value)
-      const query = {title_or_description_i_cont: value}
-      const data = (await getprojects({ q: query})).data
-      SetreqData(data)
-      console.log('press',history)
-    }
-    const SearchHistoryCard = (props) =>{
-      const keyword = props.value
-      return(
-        <TouchableOpacity onPress={()=>pressHistory(keyword)} >
-          <Card style={cardstyles.searchCard}>
-            <Text style={cardstyles.searchTxt}>{keyword}</Text>
-          </Card>
-          
-        </TouchableOpacity>
-      )
+  }
+  useEffect(() => {
+    if (Searchblur) {
+      SetSearchblur(false);
     }
     AsyncStorage.getItem('keyword')
       .then((req) => JSON.parse(req))
@@ -150,12 +124,11 @@ function Search({navigation}) {
         console.log(json);
         setKeywords(json);
       })
-      .catch((error) => console.log('error!'));
+      .catch((error) => console.log(error));
   }, [reqData]);
 
   async function pressHistory(value) {
     setEnterSearch(value);
-    setAsync(value);
     const query = {title_or_description_i_cont: value};
     const data = (await getprojects({q: query})).data;
     SetreqData(data);
@@ -218,7 +191,7 @@ function Search({navigation}) {
           ) : (
             <>
               <Text style={styles.searchtxt}>최근 검색어</Text>
-              {keywords ? (
+              {keywords.length !== 0 ? (
                 <>
                   {keywords.map((keyword, index) => {
                     return <SearchHistoryCard value={keyword} key={index} />;
