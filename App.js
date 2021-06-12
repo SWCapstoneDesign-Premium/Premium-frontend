@@ -7,16 +7,19 @@
  */
 
 import React, {useState} from 'react';
-import {NavigationContainer} from "@react-navigation/native";
-import Stack from "./Navigation/StackNavigation";
-import {decode, encode} from 'base-64'
-import {CurrentUser} from './src/utils/CurrentUser'
+import {NavigationContainer} from '@react-navigation/native';
+import Stack from './Navigation/StackNavigation';
+import {decode, encode} from 'base-64';
+import {CurrentUser} from './src/utils/CurrentUser';
 
-if (!global.btoa) {  global.btoa = encode }
-if (!global.atob) { global.atob = decode }
+if (!global.btoa) {
+  global.btoa = encode;
+}
+if (!global.atob) {
+  global.atob = decode;
+}
 
-
-export default function App(){
+export default function App() {
   const [context, setContext] = useState();
   return (
     <CurrentUser.Provider value={[context, setContext]}>
@@ -24,6 +27,5 @@ export default function App(){
         <Stack />
       </NavigationContainer>
     </CurrentUser.Provider>
-  )
+  );
 }
-
