@@ -121,8 +121,10 @@ function Search({navigation}) {
     AsyncStorage.getItem('keyword')
       .then((req) => JSON.parse(req))
       .then((json) => {
-        console.log(json);
-        setKeywords(json);
+        if (json !== null) {
+          console.log(json);
+          setKeywords(json);
+        }
       })
       .catch((error) => console.log(error));
   }, [reqData]);
@@ -262,7 +264,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 15,
     elevation: 20,
-    borderRadius: 15,
   },
   thumbnail: {
     borderRadius: 13,
