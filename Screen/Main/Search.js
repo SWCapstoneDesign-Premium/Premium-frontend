@@ -83,12 +83,20 @@ function Search({navigation}) {
     SetSearchData(text);
   };
 
-  const setAsync = (value) => {
-    console.log(value);
-    sethistory([value, ...history]);
-    setSearchHistory(history);
-    console.log('asny', history);
-  };
+    const setAsync = (value)=>{
+      console.log(value)
+      sethistory([value,...history])
+      console.log('add history',history)
+      AsyncStorage.getItem('keyword')
+      .then(req => JSON.parse(req))
+      .then(json =>{ 
+        console.log(json)
+       setKeywords(json)
+      })
+      .catch(error => console.log(error))
+      setSearchHistory((history))
+      console.log('asny',history)
+    }
 
   async function SearchVal() {
     if (SearchData.length <= 0) {
@@ -103,10 +111,38 @@ function Search({navigation}) {
       const data = (await getprojects({q: query})).data;
       SetreqData(data);
     }
-  }
-  useEffect(() => {
-    if (Searchblur) {
-      SetSearchblur(false);
+
+    useEffect(()=>{
+      if(Searchblur){
+        SetSearchblur(false)
+      }
+      AsyncStorage.getItem('keyword')
+      .then(req => JSON.parse(req))
+      .then(json =>{ 
+        console.log(json)
+       setKeywords(json)
+      })
+      .catch(error => console.log(error))
+
+    },[reqData])
+
+    async function pressHistory (value){
+      setEnterSearch(value)
+      const query = {title_or_description_i_cont: value}
+      const data = (await getprojects({ q: query})).data
+      SetreqData(data)
+      console.log('press',history)
+    }
+    const SearchHistoryCard = (props) =>{
+      const keyword = props.value
+      return(
+        <TouchableOpacity onPress={()=>pressHistory(keyword)} >
+          <Card style={cardstyles.searchCard}>
+            <Text style={cardstyles.searchTxt}>{keyword}</Text>
+          </Card>
+          
+        </TouchableOpacity>
+      )
     }
     AsyncStorage.getItem('keyword')
       .then((req) => JSON.parse(req))
