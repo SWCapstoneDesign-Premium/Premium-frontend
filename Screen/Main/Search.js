@@ -85,33 +85,19 @@ function Search({navigation}) {
     SetSearchData(text);
   };
 
-  const setAsync = (value) => {
-    console.log(value);
-    sethistory([value, ...history]);
-    console.log('add history', history);
-    AsyncStorage.getItem('keyword')
-      .then((req) => JSON.parse(req))
-      .then((json) => {
-        console.log(json);
-        setKeywords(json);
-      })
-      .catch((error) => console.log(error));
-    setSearchHistory(history);
-    console.log('asny', history);
-  };
-
   async function SearchVal() {
     if (SearchData.length <= 0) {
       alert('2글자 이상의 검색어를 입력해주세요');
     } else {
-      console.log(SearchData);
-      sethistory([SearchData, ...history]);
-      setSearchHistory(history);
-      setEnterSearch(SearchData);
-      setAsync(SearchData);
       const query = {title_or_description_i_cont: SearchData};
       const data = (await getprojects({q: query})).data;
       SetreqData(data);
+
+      const historys = await [SearchData, ...history]
+      sethistory(historys);
+      console.log(historys)
+      setSearchHistory(historys);
+      setEnterSearch(SearchData);
     }
   }
   useEffect(() => {
@@ -122,12 +108,12 @@ function Search({navigation}) {
       .then((req) => JSON.parse(req))
       .then((json) => {
         if (json !== null) {
-          console.log(json);
           setKeywords(json);
         }
       })
       .catch((error) => console.log(error));
   }, [reqData]);
+
 
   async function pressHistory(value) {
     setEnterSearch(value);
