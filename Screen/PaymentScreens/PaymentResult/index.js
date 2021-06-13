@@ -35,7 +35,9 @@ export default function PaymentResult({ navigation }) {
           "deposit":amount,
           "project_id":projID
         }
-      ).then(res => console.log(res)).catch(e => console.log(e))
+      )
+      .then(res => console.log(res))
+      .catch(e => console.log(e))
     }
   }, []);
   
