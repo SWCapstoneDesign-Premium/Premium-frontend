@@ -8,6 +8,11 @@ target 'first' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+
+
+    # add pods for desired Firebase products
+    # https://firebase.google.com/docs/ios/setup#available-pods
+
   target 'firstTests' do
     inherit! :complete
     # Pods for testing

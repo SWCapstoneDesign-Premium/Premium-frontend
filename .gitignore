@@ -1,7 +1,8 @@
 # OSX
 #
 .DS_Store
-
+#
+config.jg
 # Xcode
 #
 build/
@@ -57,3 +58,12 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+#api data
+config.js
+
+#google-service json
+google-services.json
+GoogleService-info.plist
+#firebase init 설정
+Firebase.js 
