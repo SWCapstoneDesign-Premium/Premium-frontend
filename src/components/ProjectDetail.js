@@ -175,7 +175,13 @@ const ProjectDetail = (props) => {
         .then((res) => {
           if (res.data) {
             res.data.map((pr) => {
-              if (pr.project.id === project.id && pr.status === 'trial') {
+              console.log('----------------pr ------------------')
+              console.log(pr)
+              console.log('-------------------------------------')
+              if (
+                (pr.project.id === project.id && pr.status === 'trial') ||
+                pr.status === 'full'
+              ) {
                 setisJoin(true);
               }
             });
