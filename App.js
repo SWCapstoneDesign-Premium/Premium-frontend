@@ -11,7 +11,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import Stack from './Navigation/StackNavigation';
 import {decode, encode} from 'base-64';
 import {CurrentUser} from './src/utils/CurrentUser';
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
 if (!global.btoa) {
   global.btoa = encode;
 }
