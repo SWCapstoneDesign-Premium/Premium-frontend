@@ -9,7 +9,8 @@ import card2 from '../../assets/cardNews2/cardNews2-001.png';
 import {StyleSheet, ScrollView, View, Text, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {CurrentUser} from '../../src/utils/CurrentUser';
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
 class Home extends Component {
   static contextType = CurrentUser;
   state = {
