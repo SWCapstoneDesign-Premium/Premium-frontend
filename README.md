@@ -119,7 +119,7 @@ react-native run-ios
 react-native run-android
 ```
 
-4. 앱실행시 webview 관련 에러 발새할 경우
+4. 앱실행시 webview 관련 에러 발생 할 경우
 
 ```bash
 # iamport dependency에 webview 중복 설치로 인한 에러 
