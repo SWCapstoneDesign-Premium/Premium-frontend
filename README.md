@@ -14,9 +14,6 @@
 - [따숲 관리자 페이지](https://www.ddasup.ga/admin)
 
  
- for android
-
- for ios
 
 
 
@@ -122,12 +119,12 @@ react-native run-ios
 react-native run-android
 ```
 
-   - 앱실행시 webview 관련 에러 발새할 경우
+4. 앱실행시 webview 관련 에러 발새할 경우
 
 ```bash
+# iamport dependency에 webview 중복 설치로 인한 에러 
 # Invariant Violation: Tried to register two views with the same name RNCWebView
 
-# iamport dependency에 webview 중복 설치로 인한 에러 
 # iamport 모듈에 설치된 webview 삭제
 rm node_modules/iamport-react-native/node_modules/react-native-webview
 
