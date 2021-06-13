@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useEffect}from 'react';
 import { View } from 'react-native';
 import { List, ListItem, Icon, Button, Text } from 'native-base';
 
@@ -23,16 +23,21 @@ export default function PaymentResult({ navigation }) {
   //tutee id/deposit/proj id
   const paysuccess=()=>{
     console.log('프로젝트 신청')
-    paymentstatus(
-      {
-        "imp_uid":imp_uid,
-        "merchant_uid":merchant_uid,
-        "deposit":amount,
-        "project_id":projID
-      }
-    ).then(res => console.log(res)).catch(e => console.log(e))
     navigation.popToTop()
   }
+  useEffect(() => {
+    if(isSuccess){
+      console.log('payment success')
+      paymentstatus(
+        {
+          "imp_uid":imp_uid,
+          "merchant_uid":merchant_uid,
+          "deposit":amount,
+          "project_id":projID
+        }
+      ).then(res => console.log(res)).catch(e => console.log(e))
+    }
+  }, []);
   
   return (
     <View style={wrapper}>
