@@ -84,5 +84,53 @@
 6. 서비스 관리자는 사용자들이 학교 인증을 하여 튜티자격을 요청하면, 이를 확인하고 튜터 자격을 부여할 수 있습니다.
 
 
+## 4. Getting Started
 
- 
+1. 프로젝트 설치
+
+```bash
+# project download from git
+
+$ git clone https://github.com/SWCapstoneDesign-Premium/Premium-frontend.git
+```
+
+2. API 설정
+
+```bash
+# 카카오 책 검색 Api key, backend 연동 설정
+# in config.js
+
+const baseurl = {
+   port: "your local backend server ip",
+   kakaotoken: 'your kakao api key',
+};
+
+export default baseurl;
+```
+
+3. local server 및 에뮬레이터에서 앱 실행
+
+```bash
+# download and set dependency
+# install npm modules
+npm install
+
+# for ios
+react-native run-ios
+
+# for android
+react-native run-android
+```
+
+   - 앱실행시 webview 관련 에러 발새할 경우
+
+```bash
+# Invariant Violation: Tried to register two views with the same name RNCWebView
+
+# iamport dependency에 webview 중복 설치로 인한 에러 
+# iamport 모듈에 설치된 webview 삭제
+rm node_modules/iamport-react-native/node_modules/react-native-webview
+
+# 삭제 후 앱 재실행
+```
+
