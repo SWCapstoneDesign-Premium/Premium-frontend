@@ -69,15 +69,7 @@ export default function PaymentResult({ navigation }) {
       </List>
       {
         isSuccess?
-            <Button
-            bordered
-            transparent
-            style={btn}
-            onPress={paysuccess}
-          >
-            <Icon name="arrow-back" style={btnIcon} />
-            <Text style={btnText}>프로젝트 참여</Text>
-          </Button>
+            <Text style={btnText}>프로젝트 참여되었습니다!</Text>
         :
             <Button
             bordered
